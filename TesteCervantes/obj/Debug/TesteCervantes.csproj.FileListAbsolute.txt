@@ -1,0 +1,10 @@
+C:\Users\julio\Desktop\Teste-Cervantes\TesteCervantes\bin\Debug\TesteCervantes.exe.config
+C:\Users\julio\Desktop\Teste-Cervantes\TesteCervantes\bin\Debug\TesteCervantes.exe
+C:\Users\julio\Desktop\Teste-Cervantes\TesteCervantes\bin\Debug\TesteCervantes.pdb
+C:\Users\julio\Desktop\Teste-Cervantes\TesteCervantes\obj\Debug\TesteCervantes.csproj.AssemblyReference.cache
+C:\Users\julio\Desktop\Teste-Cervantes\TesteCervantes\obj\Debug\TesteCervantes.Form1.resources
+C:\Users\julio\Desktop\Teste-Cervantes\TesteCervantes\obj\Debug\TesteCervantes.Properties.Resources.resources
+C:\Users\julio\Desktop\Teste-Cervantes\TesteCervantes\obj\Debug\TesteCervantes.csproj.GenerateResource.cache
+C:\Users\julio\Desktop\Teste-Cervantes\TesteCervantes\obj\Debug\TesteCervantes.csproj.CoreCompileInputs.cache
+C:\Users\julio\Desktop\Teste-Cervantes\TesteCervantes\obj\Debug\TesteCervantes.exe
+C:\Users\julio\Desktop\Teste-Cervantes\TesteCervantes\obj\Debug\TesteCervantes.pdb
