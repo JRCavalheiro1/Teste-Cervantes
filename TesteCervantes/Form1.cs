@@ -13,7 +13,7 @@ namespace TesteCervantes
 {
     public partial class Form1 : Form
     {
-        private string connectionString = "Host=localhost;Username=postgres;Password=j2dlaI ;Database=cadastro_app_db";
+        private string connectionString = "Host=localhost;Username=postgres;Password=Js2bk;Database=cadastro_app_db";
         public Form1()
         {
             InitializeComponent();
@@ -38,7 +38,7 @@ namespace TesteCervantes
                     }
 
                     MessageBox.Show("Cadastro realizado com sucesso!");
-                    Load();
+                    LoadData();
                 }
                 catch (Exception ex)
                 {
@@ -47,7 +47,7 @@ namespace TesteCervantes
             }
         }
 
-        private void Load()
+        private void LoadData()
         {
             using (var connection = new NpgsqlConnection(connectionString))
             {
@@ -68,7 +68,7 @@ namespace TesteCervantes
                 }
             }
         }
-        private void nameInput_Validating(object sender, CancelEventArgs e)
+        private void textInput_Validating(object sender, CancelEventArgs e)
         {
             //verifica se o campo do input não está vazio
             if (String.IsNullOrEmpty(textInput.Text)) 
@@ -81,7 +81,7 @@ namespace TesteCervantes
             }
         }
 
-        private void passwordInput_Validating(object sender, CancelEventArgs e)
+        private void numberInput_Validating(object sender, CancelEventArgs e)
         {
             if (String.IsNullOrEmpty(numberInput.Text))
             {

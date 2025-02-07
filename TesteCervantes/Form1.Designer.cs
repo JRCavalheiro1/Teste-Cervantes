@@ -68,7 +68,7 @@
             this.textInput.Name = "textInput";
             this.textInput.Size = new System.Drawing.Size(232, 20);
             this.textInput.TabIndex = 2;
-            this.textInput.Validating += new System.ComponentModel.CancelEventHandler(this.nameInput_Validating);
+            this.textInput.Validating += new System.ComponentModel.CancelEventHandler(this.textInput_Validating);
             // 
             // numberInput
             // 
@@ -76,7 +76,7 @@
             this.numberInput.Name = "numberInput";
             this.numberInput.Size = new System.Drawing.Size(232, 20);
             this.numberInput.TabIndex = 3;
-            this.numberInput.Validating += new System.ComponentModel.CancelEventHandler(this.passwordInput_Validating);
+            this.numberInput.Validating += new System.ComponentModel.CancelEventHandler(this.numberInput_Validating);
             // 
             // button
             // 
