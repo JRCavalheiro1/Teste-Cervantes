@@ -29,59 +29,63 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.nameLabel = new System.Windows.Forms.Label();
-            this.passwordLabel = new System.Windows.Forms.Label();
-            this.nameInput = new System.Windows.Forms.TextBox();
-            this.passwordInput = new System.Windows.Forms.TextBox();
+            this.textLabel = new System.Windows.Forms.Label();
+            this.numberLabel = new System.Windows.Forms.Label();
+            this.textInput = new System.Windows.Forms.TextBox();
+            this.numberInput = new System.Windows.Forms.TextBox();
             this.button = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.errorProvider2 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // nameLabel
+            // textLabel
             // 
-            this.nameLabel.AutoSize = true;
-            this.nameLabel.Location = new System.Drawing.Point(238, 63);
-            this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(35, 13);
-            this.nameLabel.TabIndex = 0;
-            this.nameLabel.Text = "Nome";
+            this.textLabel.AutoSize = true;
+            this.textLabel.Location = new System.Drawing.Point(45, 29);
+            this.textLabel.Name = "textLabel";
+            this.textLabel.Size = new System.Drawing.Size(34, 13);
+            this.textLabel.TabIndex = 0;
+            this.textLabel.Text = "Texto";
             // 
-            // passwordLabel
+            // numberLabel
             // 
-            this.passwordLabel.AutoSize = true;
-            this.passwordLabel.Location = new System.Drawing.Point(238, 129);
-            this.passwordLabel.Name = "passwordLabel";
-            this.passwordLabel.Size = new System.Drawing.Size(38, 13);
-            this.passwordLabel.TabIndex = 1;
-            this.passwordLabel.Text = "Senha";
+            this.numberLabel.AutoSize = true;
+            this.numberLabel.Location = new System.Drawing.Point(45, 84);
+            this.numberLabel.Name = "numberLabel";
+            this.numberLabel.Size = new System.Drawing.Size(44, 13);
+            this.numberLabel.TabIndex = 1;
+            this.numberLabel.Text = "Número";
             // 
-            // nameInput
+            // textInput
             // 
-            this.nameInput.Location = new System.Drawing.Point(241, 79);
-            this.nameInput.Name = "nameInput";
-            this.nameInput.Size = new System.Drawing.Size(100, 20);
-            this.nameInput.TabIndex = 2;
-            this.nameInput.Validating += new System.ComponentModel.CancelEventHandler(this.nameInput_Validating);
+            this.textInput.Location = new System.Drawing.Point(48, 45);
+            this.textInput.Name = "textInput";
+            this.textInput.Size = new System.Drawing.Size(232, 20);
+            this.textInput.TabIndex = 2;
+            this.textInput.Validating += new System.ComponentModel.CancelEventHandler(this.nameInput_Validating);
             // 
-            // passwordInput
+            // numberInput
             // 
-            this.passwordInput.Location = new System.Drawing.Point(241, 145);
-            this.passwordInput.Name = "passwordInput";
-            this.passwordInput.Size = new System.Drawing.Size(100, 20);
-            this.passwordInput.TabIndex = 3;
-            this.passwordInput.Validating += new System.ComponentModel.CancelEventHandler(this.passwordInput_Validating);
+            this.numberInput.Location = new System.Drawing.Point(48, 100);
+            this.numberInput.Name = "numberInput";
+            this.numberInput.Size = new System.Drawing.Size(232, 20);
+            this.numberInput.TabIndex = 3;
+            this.numberInput.Validating += new System.ComponentModel.CancelEventHandler(this.passwordInput_Validating);
             // 
             // button
             // 
-            this.button.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.button.Location = new System.Drawing.Point(230, 197);
+            this.button.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.button.Location = new System.Drawing.Point(48, 137);
             this.button.Name = "button";
-            this.button.Size = new System.Drawing.Size(119, 34);
+            this.button.Size = new System.Drawing.Size(69, 24);
             this.button.TabIndex = 4;
-            this.button.Text = "Cadastre-se";
+            this.button.Text = "Cadastrar";
             this.button.UseVisualStyleBackColor = false;
             this.button.Click += new System.EventHandler(this.button_Click);
             // 
@@ -93,21 +97,54 @@
             // 
             this.errorProvider2.ContainerControl = this;
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.button1.Location = new System.Drawing.Point(123, 137);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(76, 24);
+            this.button1.TabIndex = 5;
+            this.button1.Text = "Editar";
+            this.button1.UseVisualStyleBackColor = false;
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.button2.Location = new System.Drawing.Point(205, 137);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 24);
+            this.button2.TabIndex = 6;
+            this.button2.Text = "Deletar";
+            this.button2.UseVisualStyleBackColor = false;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(313, 45);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(240, 250);
+            this.dataGridView1.TabIndex = 7;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ClientSize = new System.Drawing.Size(577, 348);
+            this.ClientSize = new System.Drawing.Size(603, 348);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.button);
-            this.Controls.Add(this.passwordInput);
-            this.Controls.Add(this.nameInput);
-            this.Controls.Add(this.passwordLabel);
-            this.Controls.Add(this.nameLabel);
+            this.Controls.Add(this.numberInput);
+            this.Controls.Add(this.textInput);
+            this.Controls.Add(this.numberLabel);
+            this.Controls.Add(this.textLabel);
             this.Name = "Form1";
             this.Text = "Cadastro";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -115,13 +152,16 @@
 
         #endregion
 
-        private System.Windows.Forms.Label nameLabel;
-        private System.Windows.Forms.Label passwordLabel;
-        private System.Windows.Forms.TextBox nameInput;
-        private System.Windows.Forms.TextBox passwordInput;
+        private System.Windows.Forms.Label textLabel;
+        private System.Windows.Forms.Label numberLabel;
+        private System.Windows.Forms.TextBox textInput;
+        private System.Windows.Forms.TextBox numberInput;
         private System.Windows.Forms.Button button;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.ErrorProvider errorProvider2;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
     }
 }
 
