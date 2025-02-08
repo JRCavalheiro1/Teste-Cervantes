@@ -19,10 +19,10 @@ namespace TesteCervantes
             InitializeComponent();
         }
 
-        private void button_Click(object sender, EventArgs e)
+        private void cadastrar_Click(object sender, EventArgs e)
         {
-            string text = textInput.Text;
-            int number = Convert.ToInt32(numberInput.Text);
+            //string text = textInput.Text;
+            //int number = Convert.ToInt32(numberInput.Text);
 
             using (var connection = new NpgsqlConnection(connectionString))
             {
@@ -32,8 +32,8 @@ namespace TesteCervantes
                     string query = "INSERT INTO cadastro (texto, numero) VALUES (@texto, @numero);";
                     using (var command = new NpgsqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@texto", text);
-                        command.Parameters.AddWithValue("@numero", number);
+                        command.Parameters.AddWithValue("@texto", textInput.Text);
+                        command.Parameters.AddWithValue("@numero", Convert.ToInt32(numberInput.Text));
                         command.ExecuteNonQuery();
                     }
 
@@ -105,7 +105,57 @@ namespace TesteCervantes
             clearError(numberInput, errorProvider2);
         }
 
-        //método que visa lançar o erro na hora da validação e alterar o estilo dos inputs
+        private void editar_Click(object sender, EventArgs e)
+        {
+            int numero; 
+
+            //realiza validação dos campos;
+            if(string.IsNullOrWhiteSpace(textInput.Text) || string.IsNullOrWhiteSpace(numberInput.Text))
+            {
+                MessageBox.Show("Todos os campos devem estar preenchidos!");
+                return;
+            }
+
+            if(!int.TryParse(numberInput.Text, out numero) || numero <= 1 )
+            {
+                MessageBox.Show("O número deve conter no mínimo 2 números");
+                return;
+            }
+
+            using (var connection = new NpgsqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string updateQuery = "UPDATE cadastro SET texto = @texto WHERE numero = @numero AND texto <> @texto;";
+
+                    using (var updateCommand = new NpgsqlCommand(updateQuery, connection))
+                    {
+                        updateCommand.Parameters.AddWithValue("@texto", textInput.Text);
+                        updateCommand.Parameters.AddWithValue("@numero", numero);
+
+                        int rowsAffected = updateCommand.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Dados atualizados com sucesso!");
+                            LoadData();
+                        } 
+                        else
+                        {
+                            MessageBox.Show("Nenhum dado foi atualizado!");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao atualizar: " + ex.Message);
+                }
+            }
+        }
+
+
+        //método que lança o erro na hora da validação e altera o estilo dos inputs
         private void setError(System.Windows.Forms.TextBox input, ErrorProvider provider, String message, CancelEventArgs e)
         {
             provider.SetError(input, message);
@@ -121,5 +171,16 @@ namespace TesteCervantes
             input.ForeColor = Color.Black;
         }
 
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+                textInput.Text = row.Cells["texto"].Value.ToString();
+                numberInput.Text = row.Cells["numero"].Value.ToString();
+            }
+        }
+
+        
     }
 }
