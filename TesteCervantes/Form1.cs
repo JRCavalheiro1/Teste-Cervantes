@@ -47,6 +47,141 @@ namespace TesteCervantes
             }
         }
 
+        private void editar_Click(object sender, EventArgs e)
+        {
+            int number;
+
+            //realiza validação dos campos;
+            if (string.IsNullOrWhiteSpace(textInput.Text) || string.IsNullOrWhiteSpace(numberInput.Text))
+            {
+                MessageBox.Show("Todos os campos devem estar preenchidos!");
+                return;
+            }
+
+            if (!int.TryParse(numberInput.Text, out number) || number <= 1)
+            {
+                MessageBox.Show("O número deve conter no mínimo 2 números");
+                return;
+            }
+
+            using (var connection = new NpgsqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    //verifica se o número digitado existe no banco de dados
+                    string checkQuery = "SELECT COUNT(*) FROM cadastro WHERE numero = @numero;";
+
+                    using (var checkCommand = new NpgsqlCommand(checkQuery, connection))
+                    {
+                        checkCommand.Parameters.AddWithValue("@numero", number);
+                        int numberExists = Convert.ToInt32(checkCommand.ExecuteScalar());
+                        if (numberExists == 0)
+                        {
+                            MessageBox.Show("Número não econtrado no registro");
+                            return;
+                        }
+                    }
+
+                    //verifica se o texto digitado não é o mesmo já registrado
+                    string selectQuery = "SELECT texto FROM cadastro WHERE numero = @numero;";
+                    using (var selectCommand = new NpgsqlCommand(selectQuery, connection))
+                    {
+                        selectCommand.Parameters.AddWithValue("@texto", textInput.Text);
+                        var currentText = selectCommand.ExecuteScalar()?.ToString();
+
+                        if (currentText == textInput.Text)
+                        {
+                            MessageBox.Show("Os dados já estão cadastrados com esse valor.");
+                            return;
+                        }
+                    }
+
+                    //altera o valor do texto no banco de dados 
+                    string updateQuery = "UPDATE cadastro SET texto = @texto WHERE numero = @numero;";
+
+                    using (var updateCommand = new NpgsqlCommand(updateQuery, connection))
+                    {
+                        updateCommand.Parameters.AddWithValue("@texto", textInput.Text);
+                        updateCommand.Parameters.AddWithValue("@numero", number);
+
+                        int rowsAffected = updateCommand.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Dados atualizados com sucesso!");
+                            LoadData();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Nenhum dado foi atualizado!");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao atualizar: " + ex.Message);
+                }
+            }
+        }
+
+        private void deletar_Click(object sender, EventArgs e)
+        {
+            if(dataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Por favor, selecione um registro para deletar");
+                return; 
+            }
+
+            int selectedNumber = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["numero"].Value);
+            DialogResult confirmMessage = MessageBox.Show(
+                "Você tem certeza que deseja excluir este registro?",
+                "Cofirme",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if( confirmMessage == DialogResult.No )
+            {
+                return;
+            }
+
+            using (var connection = new NpgsqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string deleteQuery = "DELETE FROM cadastro WHERE numero = @numero";
+
+                    using (var deleteCommand = new NpgsqlCommand(deleteQuery, connection))
+                    {
+                        deleteCommand.Parameters.AddWithValue("@numero", selectedNumber);
+
+                        int rowsAffected = deleteCommand.ExecuteNonQuery();
+
+                        if( rowsAffected > 0 )
+                        {
+                            MessageBox.Show("Registro deletado com sucesso");
+                            LoadData();
+                        } 
+                        else
+                        {
+                            MessageBox.Show("Erro ao deletar registro");
+                        }
+                    }
+
+                } 
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao deletar: ", ex.Message);
+                }
+
+            }
+
+        }
+
+        //método que carrega os dados do banco de dados para exibir no grid view
         private void LoadData()
         {
             using (var connection = new NpgsqlConnection(connectionString))
@@ -70,7 +205,6 @@ namespace TesteCervantes
         }
         private void textInput_Validating(object sender, CancelEventArgs e)
         {
-            //verifica se o campo do input não está vazio
             if (String.IsNullOrEmpty(textInput.Text)) 
             {
                 setError(textInput, errorProvider1, "Este campo é obrigatório!", e);
@@ -105,54 +239,7 @@ namespace TesteCervantes
             clearError(numberInput, errorProvider2);
         }
 
-        private void editar_Click(object sender, EventArgs e)
-        {
-            int numero; 
-
-            //realiza validação dos campos;
-            if(string.IsNullOrWhiteSpace(textInput.Text) || string.IsNullOrWhiteSpace(numberInput.Text))
-            {
-                MessageBox.Show("Todos os campos devem estar preenchidos!");
-                return;
-            }
-
-            if(!int.TryParse(numberInput.Text, out numero) || numero <= 1 )
-            {
-                MessageBox.Show("O número deve conter no mínimo 2 números");
-                return;
-            }
-
-            using (var connection = new NpgsqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    string updateQuery = "UPDATE cadastro SET texto = @texto WHERE numero = @numero AND texto <> @texto;";
-
-                    using (var updateCommand = new NpgsqlCommand(updateQuery, connection))
-                    {
-                        updateCommand.Parameters.AddWithValue("@texto", textInput.Text);
-                        updateCommand.Parameters.AddWithValue("@numero", numero);
-
-                        int rowsAffected = updateCommand.ExecuteNonQuery();
-
-                        if (rowsAffected > 0)
-                        {
-                            MessageBox.Show("Dados atualizados com sucesso!");
-                            LoadData();
-                        } 
-                        else
-                        {
-                            MessageBox.Show("Nenhum dado foi atualizado!");
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Erro ao atualizar: " + ex.Message);
-                }
-            }
-        }
+       
 
 
         //método que lança o erro na hora da validação e altera o estilo dos inputs
@@ -181,6 +268,6 @@ namespace TesteCervantes
             }
         }
 
-        
+       
     }
 }

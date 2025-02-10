@@ -117,6 +117,7 @@
             this.button2.TabIndex = 6;
             this.button2.Text = "Deletar";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.deletar_Click);
             // 
             // dataGridView1
             // 
