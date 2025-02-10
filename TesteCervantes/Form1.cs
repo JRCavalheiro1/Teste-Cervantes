@@ -19,10 +19,10 @@ namespace TesteCervantes
             InitializeComponent();
         }
 
-        private void cadastrar_Click(object sender, EventArgs e)
+        private void register_Click(object sender, EventArgs e)
         {
             //string text = textInput.Text;
-            //int number = Convert.ToInt32(numberInput.Text);
+            int number = Convert.ToInt32(numberInput.Text);
 
             using (var connection = new NpgsqlConnection(connectionString))
             {
@@ -33,11 +33,12 @@ namespace TesteCervantes
                     using (var command = new NpgsqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@texto", textInput.Text);
-                        command.Parameters.AddWithValue("@numero", Convert.ToInt32(numberInput.Text));
+                        command.Parameters.AddWithValue("@numero", number);
                         command.ExecuteNonQuery();
                     }
 
                     MessageBox.Show("Cadastro realizado com sucesso!");
+                    registerLog("Insert", number);
                     LoadData();
                 }
                 catch (Exception ex)
@@ -47,7 +48,7 @@ namespace TesteCervantes
             }
         }
 
-        private void editar_Click(object sender, EventArgs e)
+        private void edit_Click(object sender, EventArgs e)
         {
             int number;
 
@@ -105,13 +106,16 @@ namespace TesteCervantes
                     {
                         updateCommand.Parameters.AddWithValue("@texto", textInput.Text);
                         updateCommand.Parameters.AddWithValue("@numero", number);
+                        
 
                         int rowsAffected = updateCommand.ExecuteNonQuery();
 
                         if (rowsAffected > 0)
                         {
                             MessageBox.Show("Dados atualizados com sucesso!");
+                            registerLog("Uptade", number);
                             LoadData();
+                           
                         }
                         else
                         {
@@ -126,7 +130,7 @@ namespace TesteCervantes
             }
         }
 
-        private void deletar_Click(object sender, EventArgs e)
+        private void delete_Click(object sender, EventArgs e)
         {
             if(dataGridView1.SelectedRows.Count == 0)
             {
@@ -135,6 +139,7 @@ namespace TesteCervantes
             }
 
             int selectedNumber = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["numero"].Value);
+
             DialogResult confirmMessage = MessageBox.Show(
                 "Você tem certeza que deseja excluir este registro?",
                 "Cofirme",
@@ -157,11 +162,11 @@ namespace TesteCervantes
                     using (var deleteCommand = new NpgsqlCommand(deleteQuery, connection))
                     {
                         deleteCommand.Parameters.AddWithValue("@numero", selectedNumber);
-
                         int rowsAffected = deleteCommand.ExecuteNonQuery();
 
                         if( rowsAffected > 0 )
                         {
+                            registerLog("Delete", selectedNumber);
                             MessageBox.Show("Registro deletado com sucesso");
                             LoadData();
                         } 
@@ -239,7 +244,28 @@ namespace TesteCervantes
             clearError(numberInput, errorProvider2);
         }
 
-       
+       private void registerLog(string operationType, int number)
+        {
+            using (var connection = new NpgsqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+                    string registerQuery = "INSERT INTO log_operacoes (operacao, numero) VALUES (@operacao, @numero);";
+
+                    using (var command = new NpgsqlCommand(registerQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@operacao", operationType);
+                        command.Parameters.AddWithValue("@numero", number);
+                        command.ExecuteNonQuery();
+                    }
+                } 
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Erro ao registrar log: ", ex.Message);
+                }
+            }
+        }
 
 
         //método que lança o erro na hora da validação e altera o estilo dos inputs

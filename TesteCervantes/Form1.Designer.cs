@@ -87,7 +87,7 @@
             this.button.TabIndex = 4;
             this.button.Text = "Cadastrar";
             this.button.UseVisualStyleBackColor = false;
-            this.button.Click += new System.EventHandler(this.cadastrar_Click);
+            this.button.Click += new System.EventHandler(this.register_Click);
             // 
             // errorProvider1
             // 
@@ -106,7 +106,7 @@
             this.button1.TabIndex = 5;
             this.button1.Text = "Editar";
             this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.editar_Click);
+            this.button1.Click += new System.EventHandler(this.edit_Click);
             // 
             // button2
             // 
@@ -117,7 +117,7 @@
             this.button2.TabIndex = 6;
             this.button2.Text = "Deletar";
             this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.deletar_Click);
+            this.button2.Click += new System.EventHandler(this.delete_Click);
             // 
             // dataGridView1
             // 
