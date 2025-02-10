@@ -12,8 +12,9 @@ using Npgsql;
 namespace TesteCervantes
 {
     public partial class Form1 : Form
-    {
-        private string connectionString = "Host=localhost;Username=postgres;Password=Js2bk;Database=cadastro_app_db";
+    {   
+        //declara a string de conexão com o banco de dados
+        private string connectionString = "Host=localhost;Username=user;Password=password;Database=seu_db";
         public Form1()
         {
             InitializeComponent();
@@ -293,7 +294,5 @@ namespace TesteCervantes
                 numberInput.Text = row.Cells["numero"].Value.ToString();
             }
         }
-
-       
     }
 }
